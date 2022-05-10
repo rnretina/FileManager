@@ -18,7 +18,14 @@ public partial class RenameForm : Form
         if (e.KeyCode == Keys.Enter)
         {
             var newPath = Path.Combine(_directoryView.CurrentPath, textBox1.Text + Path.GetExtension(_selectedFile));
-            File.Move(_selectedFile, newPath);
+            if (File.Exists(newPath))
+            {
+                File.Move(_selectedFile, newPath);
+            }
+            else
+            {
+                Directory.Move(_selectedFile, newPath);
+            }
             _directoryView.Update();
             Close();
         }

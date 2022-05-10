@@ -48,8 +48,12 @@ public partial class MainForm : Form
         buttonArchiving.Font = new Font(font, 9F, FontStyle.Regular, GraphicsUnit.Point);
         labelLeft.Font = new Font(font, 9F, FontStyle.Regular, GraphicsUnit.Point);
         labelRight.Font = new Font(font, 9F, FontStyle.Regular, GraphicsUnit.Point);
+        label1.Font = new Font(font, 9F, FontStyle.Regular, GraphicsUnit.Point);
+        label2.Font = new Font(font, 9F, FontStyle.Regular, GraphicsUnit.Point);
         listBoxRight.Font = new Font(font, 9F, FontStyle.Regular, GraphicsUnit.Point);
         listBoxLeft.Font = new Font(font, 9F, FontStyle.Regular, GraphicsUnit.Point);
+        comboBoxFont.Font = new Font(font, 9F, FontStyle.Regular, GraphicsUnit.Point);
+        comboBoxColor.Font = new Font(font, 9F, FontStyle.Regular, GraphicsUnit.Point);
     }
 
     private void ChangeForeColor(int red, int green, int blue)
@@ -68,6 +72,10 @@ public partial class MainForm : Form
         labelRight.ForeColor = color;
         listBoxRight.ForeColor = color;
         listBoxLeft.ForeColor = color;
+        label1.ForeColor = color;
+        label2.ForeColor = color;
+        comboBoxColor.ForeColor = color;
+        comboBoxFont.ForeColor = color;
     }
 
     private void ChangeTheme(int red, int green, int blue)
@@ -85,7 +93,12 @@ public partial class MainForm : Form
         buttonEdit.BackColor = Color.FromArgb(red - 10, green, blue);
         listBoxRight.BackColor = Color.FromArgb(red- 30, green -10, blue);
         listBoxLeft.BackColor = Color.FromArgb(red - 30, green -10, blue);
+        label1.BackColor = Color.FromArgb(red, green, blue);
+        label2.BackColor = Color.FromArgb(red, green, blue);
+        comboBoxColor.BackColor = Color.FromArgb(red, green, blue);
+        comboBoxFont.BackColor = Color.FromArgb(red, green, blue);
     }
+
 
 
 private void MainForm_KeyDown_View(object sender, KeyEventArgs e)
@@ -191,6 +204,11 @@ private void MainForm_KeyDown_View(object sender, KeyEventArgs e)
         }
         else
         {
+            if (labelLeft.Text.Length == 0)
+            {
+                _leftDirectoryView.Update();
+                return;
+            }
             _leftDirectoryView.CurrentPath =
                 _leftDirectoryView.CurrentPath[.._leftDirectoryView.CurrentPath.LastIndexOf('\\')];
         }
@@ -210,6 +228,11 @@ private void MainForm_KeyDown_View(object sender, KeyEventArgs e)
         }
         else
         {
+            if (labelRight.Text.Length == 0)
+            {
+                _rightDirectoryView.Update();
+                return;
+            }
             _rightDirectoryView.CurrentPath =
                 _rightDirectoryView.CurrentPath[.._rightDirectoryView.CurrentPath.LastIndexOf('\\')];
         }
