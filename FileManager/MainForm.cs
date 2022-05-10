@@ -17,7 +17,7 @@ public partial class MainForm : Form
 
         InitializeComponent();
         var deserializer = new XmlSerializer(typeof(GUI));
-        using var reader = new StreamReader(@"D:\fm\gui.xml");
+        using var reader = new StreamReader(@"E:\fm\gui.xml");
         _gui = (GUI)deserializer.Deserialize(reader);
         ChangeTheme(255, 255, 255);
         SetFonts("Segoe UI");

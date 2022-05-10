@@ -11,15 +11,15 @@ namespace FileManager
         [OnSerializing]
         public void OnSerializing()
         {
-            //
-            //
+            Login = Crypter.Encrypt(Login);
+            Password = Crypter.Encrypt(Password);
         }
 
         [OnDeserialized]
         public void OnDeserialized()
         {
-            //
-            //
+            Login = Crypter.Decrypt(Login);
+            Password = Crypter.Decrypt(Password);
         }
     }
 }
