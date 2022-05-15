@@ -23,12 +23,7 @@ namespace FileManager
                 if (textBoxLogin.Text == _authorizationFields.Login &&
                     textBoxPassword.Text == _authorizationFields.Password)
                 {
-                    var gui = new GUI();
-                    var serializer = new XmlSerializer(typeof(GUI));
-                    using var tw = new StreamWriter(@"E:\fm\gui.xml");
-                    serializer.Serialize(tw, gui);
                     Hide();
-                    tw.Close();
                     new MainForm().Show();
                 }
             }

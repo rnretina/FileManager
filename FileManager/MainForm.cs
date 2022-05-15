@@ -14,17 +14,18 @@ public partial class MainForm : Form
     public MainForm()
     {
         KeyPreview = true;
-
         InitializeComponent();
         var deserializer = new XmlSerializer(typeof(GUI));
         using var reader = new StreamReader(@"E:\fm\gui.xml");
         _gui = (GUI)deserializer.Deserialize(reader);
-        ChangeTheme(255, 255, 255);
-        SetFonts("Segoe UI");
+        reader.Close();
+        SetFonts(_gui.Font);
+        ChangeTheme(_gui.Theme);
+        comboBoxFont.Text = _gui.Font;
+        comboBoxColor.Text = _gui.Theme;
         comboBoxFont.Items.AddRange(_gui.Fonts);
         comboBoxColor.Items.AddRange(_gui.Themes);
-
-            var drives = DriveInfo.GetDrives();
+        var drives = DriveInfo.GetDrives();
         foreach (var drive in drives)
         {
             listBoxLeft.Items.Add(drive.Name);
@@ -37,6 +38,7 @@ public partial class MainForm : Form
 
     private void SetFonts(string font)
     {
+        ResetGui(_gui.Theme, font);
         buttonCopy.Font = new Font(font, 9F, FontStyle.Regular, GraphicsUnit.Point);
         buttonDelete.Font = new Font(font, 9F, FontStyle.Regular, GraphicsUnit.Point);
         buttonEdit.Font = new Font(font, 9F, FontStyle.Regular, GraphicsUnit.Point);
@@ -78,8 +80,15 @@ public partial class MainForm : Form
         comboBoxFont.ForeColor = color;
     }
 
-    private void ChangeTheme(int red, int green, int blue)
+    private void ChangeTheme(string theme)
     {
+        int red, green, blue;
+        (red, green, blue) = theme switch
+        {
+            "White" => (255, 255, 255),
+            "Material Ocean" => (60, 105, 120),
+            "Night Owl" => (95, 75, 120)
+        };
         comboBoxColor.BackColor = Color.FromArgb(red - 10, green, blue);
         comboBoxFont.BackColor = Color.FromArgb(red - 10, green, blue);
         BackColor = Color.FromArgb(red, green, blue);
@@ -97,6 +106,7 @@ public partial class MainForm : Form
         label2.BackColor = Color.FromArgb(red, green, blue);
         comboBoxColor.BackColor = Color.FromArgb(red, green, blue);
         comboBoxFont.BackColor = Color.FromArgb(red, green, blue);
+        ChangeForeColor(red, green, blue);
     }
 
 
@@ -243,19 +253,30 @@ private void MainForm_KeyDown_View(object sender, KeyEventArgs e)
     {
         if (comboBoxColor.SelectedItem.ToString() == "Night Owl")
         {
-            ChangeTheme(95, 75, 120);
-            ChangeForeColor(95, 75, 120 );
+            ChangeTheme("Night Owl");
+            ResetGui("Night Owl", _gui.Font);
         }
         else if (comboBoxColor.SelectedItem.ToString() == "Material Ocean")
         {
-            ChangeTheme(60, 105, 120);
-            ChangeForeColor(60, 105, 120);
+            ChangeTheme("Material Ocean");
+            ResetGui("Material Ocean", _gui.Font);
         }
         else if (comboBoxColor.SelectedItem.ToString() == "White")
         {
-            ChangeTheme(255, 255, 255);
-            ChangeForeColor(255, 255, 255);
+            ChangeTheme("White");
+            ResetGui("White", _gui.Font);
         }
+    }
+
+    private void ResetGui(string theme, string font)
+    {
+        _gui.Theme = theme;
+        _gui.Font = font;
+        var newGui = new GUI() { Theme = theme, Font = font };
+        var serializer = new XmlSerializer(typeof(GUI));
+        using var tw = new StreamWriter(@"E:\fm\gui.xml");
+        serializer.Serialize(tw, newGui);
+        tw.Close();
     }
 
     private void comboBoxFont_SelectedIndexChanged(object sender, EventArgs e)
