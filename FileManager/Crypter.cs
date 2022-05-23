@@ -11,7 +11,7 @@ namespace FileManager
 {
     public static class Crypter
     {
-        private static string xmlString;
+        private static string? xmlString;
         public static string Encrypt(string data)
         {
             var rsa = new RSACryptoServiceProvider();

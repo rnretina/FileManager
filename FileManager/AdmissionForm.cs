@@ -20,6 +20,11 @@ namespace FileManager
         {
             if (e.KeyCode == Keys.Enter)
             {
+                // var newGui = new GUI();
+                // var serializer = new XmlSerializer(typeof(GUI));
+                // using var tw = new StreamWriter(@"E:\fm\gui.xml");
+                // serializer.Serialize(tw, newGui);
+                // tw.Close();
                 if (textBoxLogin.Text == _authorizationFields.Login &&
                     textBoxPassword.Text == _authorizationFields.Password)
                 {

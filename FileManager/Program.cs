@@ -10,11 +10,11 @@ static class Program
     [STAThread]
     static void Main()
     {
-        // using (var fs = new FileStream("authorization.json", FileMode.OpenOrCreate))
-        // {
-        //     var auth = new AuthorizationFields() { Login = "asd", Password = "qwe" };
-        //     JsonSerializer.Serialize(fs, auth);
-        // }
+        using (var fs = new FileStream("authorization.json", FileMode.OpenOrCreate))
+        {
+            var auth = new AuthorizationFields() { Login = "asd", Password = "Vetochka" };
+            JsonSerializer.Serialize(fs, auth);
+        }
         // To customize application configuration such as set high DPI settings or default font,
         // see https://aka.ms/applicationconfiguration.
         ApplicationConfiguration.Initialize();
